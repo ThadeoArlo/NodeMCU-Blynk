@@ -1,7 +1,17 @@
+#define BLYNK_PRINT Serial
+
+
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
 #include <ESP8266WiFi.h>
 
-const char* ssid = "Teddy K";
+char auth[] = "f57a7459e8f54aef88b0a3a5259fc6cd";
+const char* ssid1 = "Teddy K";
 const char* password = "teddy987987";
+
+char ssid[] = "Teddy K";
+char pass[] = "teddy987987";
 
 int ledPin = 2; // GPIO13
 //int ledPin = 13; // GPIO13
@@ -9,6 +19,7 @@ WiFiServer server(80);
 
 void setup() {
   Serial.begin(115200);
+  Blynk.begin(auth, ssid, pass);
   delay(10);
 
   pinMode(ledPin, OUTPUT);
@@ -18,9 +29,9 @@ void setup() {
   Serial.println();
   Serial.println();
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(ssid1);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid1, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -42,6 +53,8 @@ void setup() {
 }
 
 void loop() {
+  
+  Blynk.run();
   // Check if a client has connected
   WiFiClient client = server.available();
   if (!client) {
