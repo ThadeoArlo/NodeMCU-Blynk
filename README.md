@@ -8,3 +8,5 @@ This is a further improvement of just controlling the NodeMCU board from the web
 - Via web browser with Dynamic IP
 - Via web browser with Static IP
 - Using the Blynk app to connect your device to the NodeMCU 
+
+I'll be working on more ways to control the nodeMCU  in the ViaOthers branch, feel free to contribute and improve :)
