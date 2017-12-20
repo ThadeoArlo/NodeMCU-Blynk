@@ -25,7 +25,7 @@
   Please be sure to select the right ESP8266 module
   in the Tools -> Board menu!
 
-  Change WiFi ssid, pass, and Blynk auth token to run :)
+  Change WiFi ssidB, pass, and Blynk auth token to run :)
   Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
@@ -42,7 +42,7 @@ char auth[] = "f57a7459e8f54aef88b0a3a5259fc6cd";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Teddy K";
+char ssidB[] = "Teddy K";
 char pass[] = "teddy987987";
 
 void setup()
@@ -50,7 +50,7 @@ void setup()
   // Debug console
   Serial.begin(9600);
 
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(auth, ssidB, pass);
 }
 
 void loop()
