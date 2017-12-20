@@ -1,0 +1,1 @@
+connect to node wifi and control it there from webserver

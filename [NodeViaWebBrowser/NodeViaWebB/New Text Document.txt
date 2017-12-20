@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Friday</title>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
+	</head>
+	<body onload="apple()">
+		<iframe id="video" src="//www.youtube.com/embed/NXv3m8FWqZo?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+		<button onclick="player.playVideo()">Play</button>
+		<button onclick="player.pauseVideo()">Pause</button>
+		<button onclick="doit()">JUST DO IT</button>
+		<!-- <button onclick="document.getElementById('apple').contentWindow.playVideo();">DO IT</button> -->
+		apple pie is a car yooooo
+		<!-- <iframe src="http://192.168.1.13/"></iframe> -->
+		<iframe id="iframe" width="420" height="345" src=""></iframe>
+		<iframe src='https://www.youtube.com/embed/NXv3m8FWqZo' id="iframeid">``</iframe>
+		<script>
+			function doit() {
+				document.getElementById("iframe_id").contentDocument.
+			}
+			//
+			// function startDictation() { 	if (window.hasOwnProperty('webkitSpeechRecognition')) { 		var recognition = new webkitSpeechRecognition(); 		recognition.continuous = false; 		recognition.interimResults = false; 		recognition.lang = "en-US";
+			// 		recognition.start(); 		recognition.onresult = function (e) { 			document.getElementById('chat').value = e.results[0][0].transcript; 			recognition.stop(); 			document.getElementById('labnol').submit(); 		}; 		recognition.onerror = function (e) {
+			// 			recognition.stop(); 		} 	} }
+			if (annyang) {
+				annyang.addCommands({
+					'play': function () {
+						player.playVideo();
+						// document.getElementsByClassName('ytp-play-button')[0].click();
+					}
+				});
+				annyang.addCommands({
+					'resume': function () {
+						player.playVideo();
+					}
+				});
+				annyang.addCommands({
+					'pause': function () {
+						player.pauseVideo();
+					}
+				});
+				annyang.addCommands({
+					'apple': function () {
+						player.pauseVideo();
+					}
+				});
+				annyang.addCommands({
+					'stop': function () {
+						player.pauseVideo();
+					}
+				});
+				annyang.start();
+			}
+		</script>
+		<script></script>
+		<script>
+			//
+			// var msg = new SpeechSynthesisUtterance(); var voices = window.speechSynthesis.getVoices(); msg.voice = voices[10]; // Note: some voices don't support altering params msg.voiceURI = 'native'; msg.volume = 1; // 0 to 1 msg.rate = 1; // 0.1 to 10
+			// msg.pitch = 2; //0 to 2 msg.text = 'Hello World'; msg.lang = 'en-US';
+			//
+			// msg.onend = function(e) {   console.log('Finished in ' + event.elapsedTime + ' seconds.'); };
+			//
+			// speechSynthesis.speak(msg);
+			var player;
+			// this function gets called when API is ready to use
+			function onYouTubePlayerAPIReady() {
+				// create the global player from the specific iframe (#video)
+				player = new YT.Player('video', {
+					events: {
+						// call this function when player is ready to use
+						'onReady': onPlayerReady
+					}
+				});
+			}
+			function onPlayerReady(event) {
+				var playButton = document.getElementById("play-button");
+				playButton.addEventListener("click", function () {
+					player.playVideo();
+				});
+				var pauseButton = document.getElementById("pause-button");
+				pauseButton.addEventListener("click", function () {
+					player.pauseVideo();
+				});
+			}
+			// Inject YouTube API script
+			var tag = document.createElement('script');
+			tag.src = "//www.youtube.com/player_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		</script>
+	</body>
+</html>
