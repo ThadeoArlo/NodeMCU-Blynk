@@ -1,33 +1,31 @@
-//This is the combination of the NodeMCU control via web browser using static IP and Bylnk Control
+//This is the combination of the NodeMCU control via web browser using static IP 
+//and Bylnk Control and with PIR sensor
+
 #define BLYNK_PRINT Serial
 
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
-char ssidB[] = "Teddy K";
-char pass[] = "teddy987987";
 char auth[] = "f57a7459e8f54aef88b0a3a5259fc6cd";
  
 const char* ssid = "Teddy K"; // ssid
-const char* password = "teddy987987";// password
+const char* pass = "teddy987987";// pass
 IPAddress ip(192, 168, 1, 109); //set static ip
 IPAddress gateway(192, 168, 1, 1); //set getteway
 IPAddress subnet(255, 255, 255, 0);//set subnet
  
-int led1 = 13; // GPIO13
-int led2 = 15; // GPIO15
+int outPin = 13; // GPIO13
 int stat1;
-int stat2;
 WiFiServer server(80);
  
 void setup() {
   
-  Blynk.begin(auth, ssidB, pass);
+  Blynk.begin(auth, ssid, pass);
   Serial.begin(115200);
   delay(10);
  
-  pinMode(led1, OUTPUT);
-  digitalWrite(led1, LOW);
+  pinMode(outPin, OUTPUT);
+  digitalWrite(outPin, LOW);
  
   // Connection to wireless network
   Serial.println();
@@ -36,7 +34,7 @@ void setup() {
   Serial.println(ssid);
 
   WiFi.config(ip, gateway, subnet);
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid, pass);
  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -78,12 +76,12 @@ void loop() {
  
 
   int stat1 = 0;
-  if (request.indexOf("/led1=on") != -1)  {
-    digitalWrite(led1, HIGH);
+  if (request.indexOf("/outPin=on") != -1)  {
+    digitalWrite(outPin, HIGH);
     stat1 = 1;
   }
-  if (request.indexOf("/led1=off") != -1)  {
-    digitalWrite(led1, LOW);
+  if (request.indexOf("/outPin=off") != -1)  {
+    digitalWrite(outPin, LOW);
     stat1 = 0;
   }  
 
@@ -105,20 +103,20 @@ client.println("  </head>");
 client.println("  <body>");
 //client.println("    <script src=\"//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js\"></script>");
 client.println("    <div class=\"sq-container-halfs sq-bg-gray1\">");
-client.println("      <a href=\"/led1=on\">");
+client.println("      <a href=\"/outPin=on\">");
 client.println("        <div class=\"sq-card-halfs sq-card-btn sq-bg-yellow2 sq-card-padding\">");
 client.println("          <h1 class=\"sq-textcolor-white sq-undraggable\">ON</h1>");
 client.println("        </div>");
 client.println("      </a>");
 client.println("    </div>");
 client.println("    <div class=\"sq-container-halfs sq-bg-gray1\">");
-client.println("      <a href=\"/led1=off\">");
+client.println("      <a href=\"/outPin=off\">");
 client.println("        <div class=\"sq-card-halfs sq-card-btn sq-bg-blue3 sq-card-padding\">");
 client.println("          <h1 class=\"sq-textcolor-white sq-undraggable\">OFF</h1>");
 client.println("        </div>");
 client.println("      </a>");
 client.println("    </div>"); 
-/// led1 part. GUI, etc
+/// outPin part. GUI, etc
   client.print("Lights is now ");
   if(stat1 == 1) {
     client.print("On");
@@ -135,7 +133,7 @@ client.println("    </div>");
 //  client.println("</head>");
 //  client.println("<html>");
 //  client.println("<div align=\"center\">");
-// /// led1 part. GUI, etc
+// /// outPin part. GUI, etc
 //  client.print("LED je sada ");
 //  if(stat1 == 1) {
 //    client.print("upaljena");
@@ -143,8 +141,8 @@ client.println("    </div>");
 //    client.print("ugašena");
 //  }
 //  client.println("<br><br>");
-//  client.println("<a href=\"/led1=on\" >On </a>");
-//  client.println("<a href=\"/led1=off\">Off </a><br />");
+//  client.println("<a href=\"/outPin=on\" >On </a>");
+//  client.println("<a href=\"/outPin=off\">Off </a><br />");
 //  client.println("<br><br>");
 //
   client.println("</html>");
