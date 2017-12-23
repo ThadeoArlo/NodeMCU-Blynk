@@ -18,9 +18,9 @@ int inPin = 2;
 int stat1;
 
 
-//int pirValue;
+int pirValue = 0;
 int pirState = LOW; //pir initial state
-int val = 0;
+
 
 
 WiFiServer server(80);
@@ -84,44 +84,32 @@ void loop() {
   // engine
 
 
-  int stat1 = 0;
+//  int stat1 = 0;
   if (request.indexOf("/outPin=on") != -1)  {
     digitalWrite(outPin, HIGH);
-    stat1 = 1;
+//    stat1 = 1;
   }
   if (request.indexOf("/outPin=off") != -1)  {
     digitalWrite(outPin, LOW);
-    stat1 = 0;
-
-//  pirValue = digitalRead(inPin);
-//  if (pirValue) 
-//  { 
-//    Serial.println("==> Motion detected");
-//    digitalWrite(outPin, HIGH);
-//    stat1 = 1;
-//  } else {
-//    digitalWrite(outPin, LOW);  
 //    stat1 = 0;
-//  }
 
-//  val = digitalRead(inPin);
-//  if (val == HIGH) {
-//    digitalWrite(outPin, HIGH);
-//    delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
-//
-//    if (pirState == LOW) {
-//      Serial.println("Motion Detected!");
-//      pirState = HIGH;
-//    }
-//  } else {
-//      digitalWrite(outPin, LOW);
-//      delay(300);
-//      if (pirState == HIGH){
-//      Serial.println("No Motion");
-//      pirState = LOW;
-//    }
-//  }
-//  
+  if (pirValue == HIGH) {
+    digitalWrite(outPin, HIGH);
+    delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
+
+    if (pirState == LOW) {
+      Serial.println("Motion Detected!");
+      pirState = HIGH;
+    }
+  } else {
+      digitalWrite(outPin, LOW);
+      delay(300);
+      if (pirState == HIGH){
+      Serial.println("No Motion");
+      pirState = LOW;
+    }
+  }
+
 }
 
 
