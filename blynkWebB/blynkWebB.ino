@@ -16,16 +16,24 @@ IPAddress subnet(255, 255, 255, 0);//set subnet
 int outPin = 13; // GPIO13
 int inPin = 2;
 int stat1;
+
+
+//int pirValue;
+int pirState = LOW; //pir initial state
+int val = 0;
+
+
 WiFiServer server(80);
 
 void setup() {
 
+  pinMode(outPin, OUTPUT);
   pinMode(inPin, INPUT);
+  
   Blynk.begin(auth, ssid, pass);
   Serial.begin(115200);
   delay(10);
 
-  pinMode(outPin, OUTPUT);
   digitalWrite(outPin, LOW);
 
   // Connection to wireless network
@@ -82,32 +90,38 @@ void loop() {
     stat1 = 1;
   }
   if (request.indexOf("/outPin=off") != -1)  {
-    //    digitalWrite(outPin, LOW);
+    digitalWrite(outPin, LOW);
+    stat1 = 0;
 
+//  pirValue = digitalRead(inPin);
+//  if (pirValue) 
+//  { 
+//    Serial.println("==> Motion detected");
+//    digitalWrite(outPin, HIGH);
+//    stat1 = 1;
+//  } else {
+//    digitalWrite(outPin, LOW);  
+//    stat1 = 0;
+//  }
 
-    val = digitalRead(inPin);
-    if (val == HIGH) {
-      digitalWrite(outPin, HIGH);
-      delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
-
-      if (pirState == LOW) {
-        Serial.println("Motion Detected!");
-        pirState = HIGH;
-      }
-    } else {
-      digitalWrite(outPin, LOW);
-      delay(300);
-      if (pirState == HIGH) {
-        Serial.println("No Motion");
-        pirState = LOW;
-      }
-    }
-  }
-
-
-
-
-  stat1 = 0;
+//  val = digitalRead(inPin);
+//  if (val == HIGH) {
+//    digitalWrite(outPin, HIGH);
+//    delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
+//
+//    if (pirState == LOW) {
+//      Serial.println("Motion Detected!");
+//      pirState = HIGH;
+//    }
+//  } else {
+//      digitalWrite(outPin, LOW);
+//      delay(300);
+//      if (pirState == HIGH){
+//      Serial.println("No Motion");
+//      pirState = LOW;
+//    }
+//  }
+//  
 }
 
 
