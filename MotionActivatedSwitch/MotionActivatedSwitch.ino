@@ -19,14 +19,14 @@ void loop() {
 
     if (pirState == LOW) {
       Serial.println("Motion Detected!");
-      pirState = HIGH;
+//      pirState = HIGH;
     }
   } else {
       digitalWrite(outPin, LOW);
       delay(300);
       if (pirState == HIGH){
       Serial.println("No Motion");
-      pirState = LOW;
+//      pirState = LOW;
     }
   }
 }

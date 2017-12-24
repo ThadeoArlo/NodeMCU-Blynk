@@ -15,10 +15,15 @@ IPAddress subnet(255, 255, 255, 0);//set subnet
 
 int outPin = 13; // GPIO13
 int inPin = 2;
+
+//#define outPin D7 
+//#define inPin D4
+
+
 int stat1;
 
 
-int pirValue = 0;
+int pirValue;
 int pirState = LOW; //pir initial state
 
 
@@ -29,12 +34,12 @@ void setup() {
 
   pinMode(outPin, OUTPUT);
   pinMode(inPin, INPUT);
+  digitalWrite(outPin, LOW);
   
   Blynk.begin(auth, ssid, pass);
   Serial.begin(115200);
   delay(10);
 
-  digitalWrite(outPin, LOW);
 
   // Connection to wireless network
   Serial.println();
@@ -65,7 +70,7 @@ void setup() {
 
 void loop() {
 
-  Blynk.run();
+//  Blynk.run();
 
   WiFiClient client = server.available();
   if (!client) {
@@ -83,37 +88,48 @@ void loop() {
 
   // engine
 
-
 //  int stat1 = 0;
   if (request.indexOf("/outPin=on") != -1)  {
     digitalWrite(outPin, HIGH);
 //    stat1 = 1;
   }
   if (request.indexOf("/outPin=off") != -1)  {
-    digitalWrite(outPin, LOW);
+//    digitalWrite(outPin, LOW);
 //    stat1 = 0;
 
-  if (pirValue == HIGH) {
-    digitalWrite(outPin, HIGH);
-    delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
 
-    if (pirState == LOW) {
-      Serial.println("Motion Detected!");
-      pirState = HIGH;
-    }
-  } else {
-      digitalWrite(outPin, LOW);
-      delay(300);
-      if (pirState == HIGH){
-      Serial.println("No Motion");
-      pirState = LOW;
-    }
+
+pirValue = digitalRead(inPin);
+  if (pirValue) 
+  { 
+    Serial.println("==> Motion detected");
   }
+  digitalWrite(outPin, HIGH);
+
+
+//  pirValue = digitalRead(inPin);
+//  if (pirValue == HIGH) {
+//    digitalWrite(outPin, HIGH);
+//    delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
+//
+//    if (pirState == LOW) {
+//      Serial.println("Motion Detected!");
+//      pirState = HIGH;
+//    }
+//  } else {
+//      digitalWrite(outPin, LOW);
+//      delay(300);
+//      if (pirState == HIGH){
+//      Serial.println("No Motion");
+//      pirState = LOW;
+//    }
+//  }  
+
+
 
 }
 
 
-// Return the response
 client.println("HTTP/1.1 200 OK");
 client.println("Content-Type: text/html");
 client.println("");
@@ -178,3 +194,10 @@ Serial.println("Client disonnected");
 Serial.println("");
 
 }
+
+
+//void getPirValue(void){
+//
+//  
+//  
+//}
