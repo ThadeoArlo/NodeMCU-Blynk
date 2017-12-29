@@ -4,9 +4,9 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
-char auth[] = "f57a7459e8f54aef88b0a3a5259fc6cd";
-const char* ssid = "Teddy K"; // ssid
-const char* pass = "teddy987987";// pass
+char auth[] = "";
+const char* ssid = ""; // ssid
+const char* pass = "";// pass
 
 IPAddress ip(192, 168, 1, 109); //set static ip
 IPAddress gateway(192, 168, 1, 1); //set getteway
