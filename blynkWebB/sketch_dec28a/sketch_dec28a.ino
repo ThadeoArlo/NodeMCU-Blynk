@@ -14,7 +14,8 @@ IPAddress subnet(255, 255, 255, 0);//set subnet
 
 int outPin = 13; // GPIO13
 int pirPin = 2;
-int stat1;
+int stat_web;
+int stat_pir;
 int pirValue;
 
 //#define outPin D7 
@@ -29,7 +30,7 @@ void setup() {
   pinMode(pirPin, INPUT);
   digitalWrite(outPin, LOW);
   
-  Blynk.begin(auth, ssid, pass);
+//  Blynk.begin(auth, ssid, pass);
 
   // Connection to wireless network
   Serial.println();
@@ -58,7 +59,7 @@ void setup() {
 }
 
 void loop() {
-  Blynk.run();
+//  Blynk.run();
   WiFiClient client = server.available();
   if (!client) {
     return;
@@ -72,25 +73,44 @@ void loop() {
   Serial.println(request);
   client.flush();
 
-  int stat1 = 0;
+
+//  int stat_web = HIGH;
   if (request.indexOf("/outPin=on") != -1)  {
-    digitalWrite(outPin, HIGH);
-    stat1 = 1;
+    stat_web = HIGH;
   }
   if (request.indexOf("/outPin=off") != -1)  {
-    digitalWrite(outPin, LOW);
-    stat1 = 0;  
-}
-
+    stat_web = LOW;  
+  }
   
-  pirValue = digitalRead(pirPin);
-  if (pirValue) { 
-    if (stat1 = 0) {
-      digitalWrite(outPin, HIGH);
-      }
-  } else {
+
+
+//  pirValue = digitalRead(pirPin);
+//  if (stat_pir == HIGH) {
+//    digitalWrite(outPin, HIGH);
+//    delay(120000); // 60000ms = 1 minute, set how long you want the output to be.
+//
+//    if (stat_pir == LOW) {
+//      Serial.println("Motion Detected!");
+////      stat_pir = HIGH;
+//    }
+//  } else {
+//      digitalWrite(stat_pir, LOW);
+//      delay(300);
+//      if (stat_pir == HIGH){
+//      Serial.println("No Motion");
+////      stat_pir = LOW;
+//    }
+//  }
+
+
+if (stat_web == HIGH) {
     digitalWrite(outPin, LOW);
-   }
+  } else {
+    digitalWrite(outPin, stat_pir);
+  }
+
+
+
 
 client.println("HTTP/1.1 200 OK");
 client.println("Content-Type: text/html");
@@ -123,7 +143,7 @@ client.println("      </a>");
 client.println("    </div>");
 
 client.print("Lights is now ");
-if (stat1 == 1) {
+if (stat_web == HIGH) {
   client.print("On");
 } else {
   client.print("Off");
